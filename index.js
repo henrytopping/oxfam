@@ -4,6 +4,7 @@ require('dotenv').config()
 
 var malworld
 var scarfpin
+var durza_id = "215207761334632448";
 
 // warning: broken
 function trollKibs() {
@@ -58,7 +59,8 @@ client.on('ready', () => {
 });
 
 client.on("messageCreate", (message) => {
-    if (message.author == durza) {return;}
+    // me showing mercy:
+    // if (message.author.id == durza_id) {return;}
     
     if (message.toString().startsWith("!nick ")) {
         let mention = message.mentions.users.at(0);
