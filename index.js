@@ -60,7 +60,7 @@ function saveWord(word) {
     }
     word_map[word]++;
 
-    fs.writeFileSync('jv.txt',JSON.stringify(obj1))
+    fs.writeFileSync('jv.txt',JSON.stringify(word_map))
 }
 
 client.on('ready', () => {
