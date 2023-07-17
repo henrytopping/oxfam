@@ -1,10 +1,12 @@
 const { Client, Intents, Message, Guild } = require('discord.js');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_PRESENCES] });
 require('dotenv').config()
+const fs = require('fs')
 
 var malworld
 var scarfpin
 var durza_id = "215207761334632448";
+var jv_id = "387710206278107136"
 
 // warning: broken
 function trollKibs() {
@@ -50,6 +52,17 @@ function applyNickname(user, name) {
     }
 }
 
+function saveWord(word) {
+    let word_map = JSON.parse(fs.readFileSync('jv.txt'));
+
+    if (word_map[word] == undefined) {
+        word_map[word] = 0;
+    }
+    word_map[word]++;
+
+    fs.writeFileSync('jv.txt',JSON.stringify(word_map))
+}
+
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`)
 
@@ -62,6 +75,15 @@ client.on("messageCreate", (message) => {
     // me showing mercy:
     // if (message.author.id == durza_id) {return;}
     
+    if (message.author.id == jv_id) {
+        if (message.attachments.size == 0) {
+            let words = message.content.split(" ")
+            words.forEach(word => {
+                saveWord(word)
+            })
+        }
+    }
+
     if (message.toString().startsWith("!nick ")) {
         let mention = message.mentions.users.at(0);
         let name = getName(message.toString())
